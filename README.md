@@ -23,4 +23,4 @@ spring.jpa.hibernate.ddl-auto=update
 
 Create a 'entity' package, inside it create a class called 'Student'.
 
-![Screenshot of entity class.](infobook_backend\src\main\resources\static\images\entity.png)
+![Screenshot of entity class.](/infobook_backend/src/main/resources/static/images/entity.png)
