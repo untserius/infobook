@@ -79,6 +79,8 @@ Create a **impl** package inside the **service** package and create a class call
 ![Screenshot](/infobook_backend/src/main/resources/static/images/student_service_impl.png)
 
 > [!NOTE]
+> Why extra two methods ?
+
 > Two helper methods mapToEntity and mapToDto to improve code readability and maintainability. These methods handle the conversion `StudentDto` to `Student` before saving it to the database, and then convert the saved `Student` back to `StudentDto` before returning it.
 
 ![Screenshot](/infobook_backend/src/main/resources/static/images/helper_mapping_methods.png)
@@ -97,6 +99,7 @@ Create a **impl** package inside the **service** package and create a class call
 
 > [!WARNING]
 > Why mapToEntity() method won't work here ?
+
 > Because the student object you're mapping from doesn't have an ID yet. You should leave the ID unset, as it will be determined by the database when the entity is saved.
 
 ### 6. Controller
