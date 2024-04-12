@@ -18,4 +18,6 @@ public interface StudentService {
 
     // 'updateRecord' method takes a id and a StudentDto object as input, using that it returns an updated StudentDto object.
     public StudentDto updateRecord(Long id, StudentDto studentDto);
+
+    public StudentDto deleteStudentById(Long id);
 }

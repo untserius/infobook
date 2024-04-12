@@ -61,11 +61,14 @@ public class StudentServiceImpl implements StudentService {
             Student existingStudent = byId.get();
 
             // Update the fields of the existing Student entity with the data from the provided StudentDto object
-            existingStudent.setName(studentDto.getName());
-            existingStudent.setMobile(studentDto.getMobile());
-            existingStudent.setEmail(studentDto.getEmail());
-            existingStudent.setAddress(studentDto.getAddress());
-            existingStudent.setUniversity(studentDto.getUniversity());
+//            existingStudent.setName(studentDto.getName());
+//            existingStudent.setMobile(studentDto.getMobile());
+//            existingStudent.setEmail(studentDto.getEmail());
+//            existingStudent.setAddress(studentDto.getAddress());
+//            existingStudent.setUniversity(studentDto.getUniversity());
+
+            // Update the existing student entity with the data from the DTO
+            updateEntityFromDto(existingStudent, studentDto);
 
             Student savedStudent = studentRepository.save(existingStudent);
 
@@ -73,6 +76,20 @@ public class StudentServiceImpl implements StudentService {
             return dto;
         }
         // If the student with the specified ID does not exist in the database.
+        return null;
+    }
+
+    @Override
+    public StudentDto deleteStudentById(Long id) {
+        Optional<Student> byId = studentRepository.findById(id);
+        if(byId.isPresent()){
+            // If the student exists, delete it using the deleteById method.
+            studentRepository.deleteById(id);
+            // Convert the deleted Student entity to a StudentDto object
+            Student deletedStudent = byId.get();
+            StudentDto dto = mapToDto(deletedStudent);
+            return dto;
+        }
         return null;
     }
 
@@ -101,5 +118,24 @@ public class StudentServiceImpl implements StudentService {
         dto.setAddress(student.getAddress());
         dto.setUniversity(student.getUniversity());
         return dto;
+    }
+
+    private void updateEntityFromDto(Student student, StudentDto studentDto) {
+        // Update only the non-null fields from the DTO
+        if (studentDto.getName() != null) {
+            student.setName(studentDto.getName());
+        }
+        if (studentDto.getMobile() != null) {
+            student.setMobile(studentDto.getMobile());
+        }
+        if (studentDto.getEmail() != null) {
+            student.setEmail(studentDto.getEmail());
+        }
+        if (studentDto.getAddress() != null) {
+            student.setAddress(studentDto.getAddress());
+        }
+        if (studentDto.getUniversity() != null) {
+            student.setUniversity(studentDto.getUniversity());
+        }
     }
 }
