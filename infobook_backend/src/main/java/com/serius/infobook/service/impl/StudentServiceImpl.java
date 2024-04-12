@@ -6,6 +6,9 @@ import com.serius.infobook.repository.StudentRepository;
 import com.serius.infobook.service.StudentService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service // to mark the class as a Spring service component.
 public class StudentServiceImpl implements StudentService {
     /* marking it as 'final' - ensures that once the dependency is set during object construction,
@@ -16,19 +19,16 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepository = studentRepository;
     }
 
-    // CREATE
+    // Create
     @Override
     public StudentDto createRecord(StudentDto studentDto){
         Student student = mapToEntity(studentDto); // conversion `StudentDto` to `Student` before saving it to the DB.
-
         Student savedStudent = studentRepository.save(student); // saved in DB
-
         StudentDto dto = mapToDto(savedStudent); // then convert the saved `Student` back to `StudentDto` before returning it.
-
         return dto;
     }
 
-    // RETRIEVE
+    // Retrieve
     @Override
     public StudentDto getStudentById(Long id) {
         Student student = studentRepository.findById(id).orElseThrow(); //findById() - It will look for a student whose id no. is {id}.If not found, throw an error.
@@ -36,20 +36,45 @@ public class StudentServiceImpl implements StudentService {
         return dto;
     }
 
+    @Override
+    public List<StudentDto> getAllStudent() {
+        List<Student> student = studentRepository.findAll(); // findAll() - It will look for all saved students in DB.
+        /* The retrieved list of Student entities is converted into a stream using the stream() method.
+        Then, the map method is used to transform each Student entity into a StudentDto object using the mapToDto method,
+        and the toList terminal operation collects the transformed StudentDto objects into a list.
+         */
+        List<StudentDto> studentDtos = student.stream().map(o -> mapToDto(o)).toList();
+        return studentDtos;
+    }
 
+    // Update
+    @Override
+    public StudentDto updateRecord(Long id, StudentDto studentDto) {
+        /*
+         findById() - returns an Optional containing the entity with the specified ID if it exists in the database,
+         or an empty Optional if it does not exist.
+        */
+        Optional<Student> byId = studentRepository.findById(id);
+        // checks if the Optional contains a non-null value.
+        if(byId.isPresent()){
+            // retrieves the value from the Optional, which is the Student entity if it exists.
+            Student existingStudent = byId.get();
 
+            // Update the fields of the existing Student entity with the data from the provided StudentDto object
+            existingStudent.setName(studentDto.getName());
+            existingStudent.setMobile(studentDto.getMobile());
+            existingStudent.setEmail(studentDto.getEmail());
+            existingStudent.setAddress(studentDto.getAddress());
+            existingStudent.setUniversity(studentDto.getUniversity());
 
+            Student savedStudent = studentRepository.save(existingStudent);
 
-
-
-
-
-
-
-
-
-
-
+            StudentDto dto = mapToDto(savedStudent);
+            return dto;
+        }
+        // If the student with the specified ID does not exist in the database.
+        return null;
+    }
 
 
     // Helper method to convert StudentDto to Student entity
@@ -63,6 +88,8 @@ public class StudentServiceImpl implements StudentService {
         student.setUniversity(studentDto.getUniversity());
         return student;
     }
+
+
 
     // Helper method to convert Student entity to StudentDto
     private StudentDto mapToDto(Student student) {

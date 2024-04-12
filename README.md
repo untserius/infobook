@@ -54,15 +54,21 @@ Create a **payload** package, inside it create a class called `StudentDto`.
 
 Create a **service** package, inside it create a class called `StudentService`.
 
-> CREATE
+> Create
 
 ![Screenshot](/infobook_backend/src/main/resources/static/images/student_service.png)
 
 Overall, this interface defines a contract for a service responsible for creating student records based on DTO input.
 
-> RETRIEVE
+> Retrieve
 
 ![Screenshot](/infobook_backend/src/main/resources/static/images/get_student_by_id.png)
+
+![Screenshot](/infobook_backend/src/main/resources/static/images/all_student_service.png)
+
+> Update
+
+![Screenshot](/infobook_backend/src/main/resources/static/images/update_record.png)
 
 #### 6.1 Service Implementations
 
@@ -72,13 +78,26 @@ Create a **impl** package inside the **service** package and create a class call
 
 ![Screenshot](/infobook_backend/src/main/resources/static/images/student_service_impl.png)
 
-Two helper methods mapToEntity and mapToDto to improve code readability and maintainability. These methods handle the conversion `StudentDto` to `Student` before saving it to the database, and then convert the saved `Student` back to `StudentDto` before returning it.
+> [!NOTE]
+> Two helper methods mapToEntity and mapToDto to improve code readability and maintainability. These methods handle the conversion `StudentDto` to `Student` before saving it to the database, and then convert the saved `Student` back to `StudentDto` before returning it.
 
 ![Screenshot](/infobook_backend/src/main/resources/static/images/helper_mapping_methods.png)
 
 > Provided a \_ _getStudentById_ \_ method to find the student for the given id no.
 
 ![Screenshot](/infobook_backend/src/main/resources/static/images/get_student_by_id_impl.png)
+
+> Provided a \_ _getAllStudent_ \_ method to find the student for the given id no.
+
+![Screenshot](/infobook_backend/src/main/resources/static/images/get_all_student_impl.png)
+
+> Provided a \_ _updateRecord_ \_ method to find the student for the given id no.
+
+![Screenshot](/infobook_backend/src/main/resources/static/images/update_record_impl.png)
+
+> [!WARNING]
+> Why mapToEntity() method won't work here ?
+> Because the student object you're mapping from doesn't have an ID yet. You should leave the ID unset, as it will be determined by the database when the entity is saved.
 
 ### 6. Controller
 
@@ -87,3 +106,5 @@ Create a **controller** package, inside it create a class called `StudentControl
 ![Screenshot](/infobook_backend/src/main/resources/static/images/student_controller.png)
 
 ![Screenshot](/infobook_backend/src/main/resources/static/images/get_student_by_id_controller.png)
+
+![Screenshot](/infobook_backend/src/main/resources/static/images/update_student_controller.png)
