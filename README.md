@@ -127,3 +127,10 @@ You can refer to API Documentation for testing purposes [Infobook API's](https:/
 ### 7. Issues
 
 - [] https://github.com/untserius/infobook/issues/1
+- 
+## Task List
+
+- [x] Task 1 - Completed
+- [ ] Task 2 - Incomplete
+- [ ] Task 3 - Incomplete
+
