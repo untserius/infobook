@@ -41,21 +41,28 @@ Create a **payload** package, inside it create a class called `StudentDto`.
 
 ![Screenshot](/infobook_backend/src/main/resources/static/images/student_dto.png)
 
-**_So, why use DTOs?_**
+> [!NOTE]
+> So, why use DTOs?
 
-- DTOs help reduce the amount of data transferred over the network or between different layers of your application. Since they contain only the necessary information.
+> DTOs help reduce the amount of data transferred over the network or between different layers of your application. Since they contain only the necessary information.
 
-- DTOs encapsulate the data being transferred, providing a layer of security by hiding sensitive or unnecessary information that should not be exposed outside.
+> DTOs encapsulate the data being transferred, providing a layer of security by hiding sensitive or unnecessary information that should not be exposed outside.
 
-- By using DTOs, you can decouple different parts of your application. This makes it easier to modify or extend the data structure without affecting other parts of the application. For example, if you decide to add or remove fields from the Student object, you can update the corresponding DTOs without impacting the entire system.
+> By using DTOs, you can decouple different parts of your application. This makes it easier to modify or extend the data structure without affecting other parts of the application. For example, if you decide to add or remove fields from the Student object, you can update the corresponding DTOs without impacting the entire system.
 
 ### 6. Service
 
 Create a **service** package, inside it create a class called `StudentService`.
 
+> CREATE
+
 ![Screenshot](/infobook_backend/src/main/resources/static/images/student_service.png)
 
 Overall, this interface defines a contract for a service responsible for creating student records based on DTO input.
+
+> RETRIEVE
+
+![Screenshot](/infobook_backend/src/main/resources/static/images/get_student_by_id.png)
 
 #### 6.1 Service Implementations
 
@@ -68,3 +75,15 @@ Create a **impl** package inside the **service** package and create a class call
 Two helper methods mapToEntity and mapToDto to improve code readability and maintainability. These methods handle the conversion `StudentDto` to `Student` before saving it to the database, and then convert the saved `Student` back to `StudentDto` before returning it.
 
 ![Screenshot](/infobook_backend/src/main/resources/static/images/helper_mapping_methods.png)
+
+> Provided a \_ _getStudentById_ \_ method to find the student for the given id no.
+
+![Screenshot](/infobook_backend/src/main/resources/static/images/get_student_by_id_impl.png)
+
+### 6. Controller
+
+Create a **controller** package, inside it create a class called `StudentController`.
+
+![Screenshot](/infobook_backend/src/main/resources/static/images/student_controller.png)
+
+![Screenshot](/infobook_backend/src/main/resources/static/images/get_student_by_id_controller.png)
