@@ -1,7 +1,7 @@
 package com.serius.infobook.payload;
 
 public class StudentDto {
-    private long id;
+    private Long id;
     private String name;
     private String mobile;
     private String email;
@@ -48,11 +48,11 @@ public class StudentDto {
         this.university = university;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }
