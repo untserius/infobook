@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service // to mark the class as a Spring service component.
 public class StudentServiceImpl implements StudentService {
     /* marking it as 'final' - ensures that once the dependency is set during object construction,
-    it cannot be changed afterwards. */
+    it cannot be changed afterward. */
     private final StudentRepository studentRepository;
 
     public StudentServiceImpl(StudentRepository studentRepository) {

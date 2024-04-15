@@ -1,9 +1,19 @@
 package com.serius.infobook.payload;
 
+import com.serius.infobook.validator.OnlyGmail;
+import jakarta.validation.constraints.*;
+
 public class StudentDto {
     private Long id;
     private String name;
+
+    @NotEmpty
+    @Size(min = 10, message = "Please enter a valid mobile no.")
     private String mobile;
+
+    @NotEmpty
+    @Email(message = "Enter a valid email id")
+    @OnlyGmail
     private String email;
     private String address;
     private String university;

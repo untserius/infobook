@@ -3,8 +3,10 @@ package com.serius.infobook.controller;
 import com.serius.infobook.entity.Student;
 import com.serius.infobook.payload.StudentDto;
 import com.serius.infobook.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +27,10 @@ public class StudentController {
     @PostMapping("/addStudent")
     // @RequestBody accepts a StudentDto object in the request body. This object represents the data of the student to be created.
     // ResponseEntity method returns a ResponseEntity object, which allows you to customize the HTTP response.
-    public ResponseEntity<?> createStudent(@RequestBody StudentDto studentDto){
+    public ResponseEntity<?> createStudent(@Valid @RequestBody StudentDto studentDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity<>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         StudentDto dto = studentService.createRecord(studentDto);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
