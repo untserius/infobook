@@ -123,3 +123,14 @@ Create a **controller** package, inside it create a class called `StudentControl
 ### 7. API Documentation
 
 You can refer to API Documentation for testing purposes [Infobook API's](https://documenter.getpostman.com/view/32566359/2sA3Bhfaka).
+
+### 7. Issues
+
+- [] https://github.com/untserius/infobook/issues/1
+-
+
+## Task List
+
+- [x] Task 1 - Completed
+- [ ] Task 2 - Incomplete
+- [ ] Task 3 - Incomplete
