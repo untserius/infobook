@@ -90,7 +90,6 @@ Create a **impl** package inside the **service** package and create a class call
 
 ![Screenshot](/infobook_backend/src/main/resources/static/images/update_helper_method.png)
 
-
 > Provided a \_ _getStudentById_ \_ method to find the student for the given id no.
 
 ![Screenshot](/infobook_backend/src/main/resources/static/images/get_student_by_id_impl.png)
