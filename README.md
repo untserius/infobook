@@ -81,11 +81,15 @@ Create a **impl** package inside the **service** package and create a class call
 ![Screenshot](/infobook_backend/src/main/resources/static/images/student_service_impl.png)
 
 > [!NOTE]
-> Why extra two methods ?
+> Why extra helper methods ?
 
 > Two helper methods mapToEntity() and mapToDto() to improve code readability and maintainability. These methods handle the conversion `StudentDto` to `Student` before saving it to the database, and then convert the saved `Student` back to `StudentDto` before returning it.
+> updateEntityFromDto() method checks and updates only the non-null fields from the DTO
 
 ![Screenshot](/infobook_backend/src/main/resources/static/images/helper_mapping_methods.png)
+
+![Screenshot](/infobook_backend/src/main/resources/static/images/update_helper_method.png)
+
 
 > Provided a \_ _getStudentById_ \_ method to find the student for the given id no.
 
@@ -123,14 +127,3 @@ Create a **controller** package, inside it create a class called `StudentControl
 ### 7. API Documentation
 
 You can refer to API Documentation for testing purposes [Infobook API's](https://documenter.getpostman.com/view/32566359/2sA3Bhfaka).
-
-### 7. Issues
-
-- [] https://github.com/untserius/infobook/issues/1
--
-
-## Task List
-
-- [x] Task 1 - Completed
-- [ ] Task 2 - Incomplete
-- [ ] Task 3 - Incomplete

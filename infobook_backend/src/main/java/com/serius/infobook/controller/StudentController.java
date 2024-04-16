@@ -1,6 +1,6 @@
 package com.serius.infobook.controller;
 
-import com.serius.infobook.entity.Student;
+import com.serius.infobook.payload.ListStudentDto;
 import com.serius.infobook.payload.StudentDto;
 import com.serius.infobook.service.StudentService;
 import jakarta.validation.Valid;
@@ -57,6 +57,26 @@ public class StudentController {
     public ResponseEntity<?> deleteStudentById(@PathVariable Long id){
         StudentDto dto = studentService.deleteStudentById(id);
         return new ResponseEntity<>("Successfully Deleted Id No: " + dto.getId(), HttpStatus.OK);
+    }
+
+    @GetMapping("/fetchallbypaginationandsorting")
+    public ResponseEntity<ListStudentDto> fetchAllStudent(
+            @RequestParam(name = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(name = "pageSize", defaultValue = "5", required = false) int pageSize,
+            @RequestParam(name = "sortBy", defaultValue = "id", required = false) String sortBy,
+            @RequestParam(name = "sortDir", defaultValue = "asc", required = false) String sortDir
+    ){
+        ListStudentDto listStudentDto = studentService.fetchAllStudentByPaginationAndSorting(pageNo, pageSize, sortBy, sortDir);
+        return new ResponseEntity<>(listStudentDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/fetchallbypagination")
+    public ResponseEntity<ListStudentDto> fetchAllStudents(
+            @RequestParam(name = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(name = "pageSize", defaultValue = "5", required = false) int pageSize
+    ){
+        ListStudentDto listStudentDto = studentService.getAllStudentByPagination(pageNo, pageSize);
+        return new ResponseEntity<>(listStudentDto, HttpStatus.OK);
     }
 
 }

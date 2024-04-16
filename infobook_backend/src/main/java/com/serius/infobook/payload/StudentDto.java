@@ -13,7 +13,7 @@ public class StudentDto {
 
     @NotEmpty
     @Email(message = "Enter a valid email id")
-    @OnlyGmail
+    @OnlyGmail // Custom Validator made by @Sudhir Das
     private String email;
     private String address;
     private String university;
