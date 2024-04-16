@@ -17,9 +17,15 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     // 'id' is the primary key
     private Long id;
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false, unique = true)
     private String mobile;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
     private String address;
     private String university;
 

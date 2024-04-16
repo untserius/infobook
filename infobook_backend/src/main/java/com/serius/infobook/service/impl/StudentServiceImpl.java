@@ -1,6 +1,7 @@
 package com.serius.infobook.service.impl;
 
 import com.serius.infobook.entity.Student;
+import com.serius.infobook.exception.ResourceNotFound;
 import com.serius.infobook.payload.ListStudentDto;
 import com.serius.infobook.payload.StudentDto;
 import com.serius.infobook.repository.StudentRepository;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service // to mark the class as a Spring service component.
@@ -36,7 +38,9 @@ public class StudentServiceImpl implements StudentService {
     // Retrieve
     @Override
     public StudentDto getStudentById(Long id) {
-        Student student = studentRepository.findById(id).orElseThrow(); //findById() - It will look for a student whose id no. is {id}.If not found, throw an error.
+        Student student = studentRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFound("ID no " + id + " doesn't exist")
+        ); //findById() - It will look for a student whose id no. is {id}.If not found, throw an error.
         StudentDto dto = mapToDto(student); // then convert the fetched `Student` back to `StudentDto` before returning it.
         return dto;
     }
@@ -133,9 +137,10 @@ public class StudentServiceImpl implements StudentService {
             return dto;
         }
         // If the student with the specified ID does not exist in the database.
-        return null;
+        throw new ResourceNotFound("Update failed as ID no. " + id + " doesn't exist");
     }
 
+    // Delete
     @Override
     public StudentDto deleteStudentById(Long id) {
         Optional<Student> byId = studentRepository.findById(id);
@@ -147,7 +152,7 @@ public class StudentServiceImpl implements StudentService {
             StudentDto dto = mapToDto(deletedStudent);
             return dto;
         }
-        return null;
+        return null; // It will give NullPointerException if Id not found.
     }
 
 
