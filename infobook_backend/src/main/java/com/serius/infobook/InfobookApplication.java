@@ -10,4 +10,5 @@ public class InfobookApplication {
 		SpringApplication.run(InfobookApplication.class, args);
 	}
 
+
 }

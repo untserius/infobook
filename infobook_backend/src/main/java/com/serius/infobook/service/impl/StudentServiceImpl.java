@@ -2,6 +2,7 @@ package com.serius.infobook.service.impl;
 
 import com.serius.infobook.entity.Student;
 import com.serius.infobook.exception.ResourceNotFound;
+import com.serius.infobook.mapper.ObjectMapper;
 import com.serius.infobook.payload.ListStudentDto;
 import com.serius.infobook.payload.StudentDto;
 import com.serius.infobook.repository.StudentRepository;
@@ -29,9 +30,9 @@ public class StudentServiceImpl implements StudentService {
     // Create
     @Override
     public StudentDto createRecord(StudentDto studentDto){
-        Student student = mapToEntity(studentDto); // conversion `StudentDto` to `Student` before saving it to the DB.
+        Student student = ObjectMapper.mapStudentToEntity(studentDto); // conversion `StudentDto` to `Student` before saving it to the DB.
         Student savedStudent = studentRepository.save(student); // saved in DB
-        StudentDto dto = mapToDto(savedStudent); // then convert the saved `Student` back to `StudentDto` before returning it.
+        StudentDto dto = ObjectMapper.mapStudentToDto(student); // then convert the saved `Student` back to `StudentDto` before returning it.
         return dto;
     }
 
@@ -41,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFound("ID no " + id + " doesn't exist")
         ); //findById() - It will look for a student whose id no. is {id}.If not found, throw an error.
-        StudentDto dto = mapToDto(student); // then convert the fetched `Student` back to `StudentDto` before returning it.
+        StudentDto dto = ObjectMapper.mapStudentToDto(student); // then convert the fetched `Student` back to `StudentDto` before returning it.
         return dto;
     }
 
@@ -52,7 +53,7 @@ public class StudentServiceImpl implements StudentService {
         Then, the map method is used to transform each Student entity into a StudentDto object using the mapToDto method,
         and the toList terminal operation collects the transformed StudentDto objects into a list.
          */
-        List<StudentDto> studentDtos = student.stream().map(o -> mapToDto(o)).toList();
+        List<StudentDto> studentDtos = student.stream().map(o -> ObjectMapper.mapStudentToDto(o)).toList();
         return studentDtos;
     }
 
@@ -78,7 +79,7 @@ public class StudentServiceImpl implements StudentService {
 
         // This list can be accessed via the getContent() method, which returns a List<Student> containing the entities on the current page.
         List<Student> content = all.getContent();
-        List<StudentDto> dtoList = content.stream().map(e -> mapToDto(e)).toList();
+        List<StudentDto> dtoList = content.stream().map(e -> ObjectMapper.mapStudentToDto(e)).toList();
 
         ListStudentDto listStudentDto = new ListStudentDto();
 
@@ -101,7 +102,7 @@ public class StudentServiceImpl implements StudentService {
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
         Page<Student> all = studentRepository.findAll(pageable);
         List<Student> content = all.getContent();
-        List<StudentDto> dtoList = content.stream().map(e -> mapToDto(e)).toList();
+        List<StudentDto> dtoList = content.stream().map(e -> ObjectMapper.mapStudentToDto(e)).toList();
 
         ListStudentDto listStudentDto = new ListStudentDto();
 
@@ -129,11 +130,11 @@ public class StudentServiceImpl implements StudentService {
             Student existingStudent = byId.get();
 
             // Update the existing student entity with the data from the DTO
-            updateEntityFromDto(existingStudent, studentDto);
+            ObjectMapper.updateStudentEntityFromDto(existingStudent, studentDto);
 
             Student savedStudent = studentRepository.save(existingStudent);
 
-            StudentDto dto = mapToDto(savedStudent);
+            StudentDto dto = ObjectMapper.mapStudentToDto(savedStudent);
             return dto;
         }
         // If the student with the specified ID does not exist in the database.
@@ -149,7 +150,7 @@ public class StudentServiceImpl implements StudentService {
             studentRepository.deleteById(id);
             // Convert the deleted Student entity to a StudentDto object
             Student deletedStudent = byId.get();
-            StudentDto dto = mapToDto(deletedStudent);
+            StudentDto dto = ObjectMapper.mapStudentToDto(deletedStudent);
             return dto;
         }
         return null; // It will give NullPointerException if Id not found.
@@ -157,46 +158,46 @@ public class StudentServiceImpl implements StudentService {
 
 
     // Helper method to convert StudentDto to Student entity
-    private Student mapToEntity(StudentDto studentDto) {
-        Student student = new Student();
-        student.setId(student.getId());
-        student.setName(studentDto.getName());
-        student.setMobile(studentDto.getMobile());
-        student.setEmail(studentDto.getEmail());
-        student.setAddress(studentDto.getAddress());
-        student.setUniversity(studentDto.getUniversity());
-        return student;
-    }
-
-    // Helper method to convert Student entity to StudentDto
-    private StudentDto mapToDto(Student student) {
-        StudentDto dto = new StudentDto();
-        dto.setId(student.getId());
-        dto.setName(student.getName());
-        dto.setMobile(student.getMobile());
-        dto.setEmail(student.getEmail());
-        dto.setAddress(student.getAddress());
-        dto.setUniversity(student.getUniversity());
-        return dto;
-    }
+//    private Student mapToEntity(StudentDto studentDto) {
+//        Student student = new Student();
+//        student.setId(student.getId());
+//        student.setName(studentDto.getName());
+//        student.setMobile(studentDto.getMobile());
+//        student.setEmail(studentDto.getEmail());
+//        student.setAddress(studentDto.getAddress());
+//        student.setUniversity(studentDto.getUniversity());
+//        return student;
+//    }
+//
+//    // Helper method to convert Student entity to StudentDto
+//    private StudentDto mapToDto(Student student) {
+//        StudentDto dto = new StudentDto();
+//        dto.setId(student.getId());
+//        dto.setName(student.getName());
+//        dto.setMobile(student.getMobile());
+//        dto.setEmail(student.getEmail());
+//        dto.setAddress(student.getAddress());
+//        dto.setUniversity(student.getUniversity());
+//        return dto;
+//    }
 
     // Helper method to update only the non-null fields from the DTO
-    private void updateEntityFromDto(Student student, StudentDto studentDto) {
-
-        if (studentDto.getName() != null) {
-            student.setName(studentDto.getName());
-        }
-        if (studentDto.getMobile() != null) {
-            student.setMobile(studentDto.getMobile());
-        }
-        if (studentDto.getEmail() != null) {
-            student.setEmail(studentDto.getEmail());
-        }
-        if (studentDto.getAddress() != null) {
-            student.setAddress(studentDto.getAddress());
-        }
-        if (studentDto.getUniversity() != null) {
-            student.setUniversity(studentDto.getUniversity());
-        }
-    }
+//    private void updateEntityFromDto(Student student, StudentDto studentDto) {
+//
+//        if (studentDto.getName() != null) {
+//            student.setName(studentDto.getName());
+//        }
+//        if (studentDto.getMobile() != null) {
+//            student.setMobile(studentDto.getMobile());
+//        }
+//        if (studentDto.getEmail() != null) {
+//            student.setEmail(studentDto.getEmail());
+//        }
+//        if (studentDto.getAddress() != null) {
+//            student.setAddress(studentDto.getAddress());
+//        }
+//        if (studentDto.getUniversity() != null) {
+//            student.setUniversity(studentDto.getUniversity());
+//        }
+//    }
 }
