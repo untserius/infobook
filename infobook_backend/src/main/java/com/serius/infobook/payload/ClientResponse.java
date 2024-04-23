@@ -9,5 +9,5 @@ import java.util.Date;
 public class ClientResponse {
     private String type;
     private String token;
-    private long expiretime;
+    private float expireTimeInMins;
 }

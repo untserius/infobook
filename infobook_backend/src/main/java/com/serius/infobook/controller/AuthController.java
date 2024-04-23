@@ -1,7 +1,6 @@
 package com.serius.infobook.controller;
 
 import com.auth0.jwt.JWT;
-import com.serius.infobook.entity.User;
 import com.serius.infobook.payload.ClientResponse;
 import com.serius.infobook.payload.LoginDto;
 import com.serius.infobook.payload.UserDto;
@@ -41,7 +40,10 @@ public class AuthController {
             ClientResponse clientResponse = new ClientResponse();
             clientResponse.setType("Bearer");
             clientResponse.setToken(signedToken);
-            clientResponse.setExpiretime(JWT.decode(signedToken).getExpiresAt().getTime() / 1000);
+
+            Date date = new Date(JWT.decode(signedToken).getExpiresAt().getTime() - System.currentTimeMillis());
+            float mins = (float) date.getTime() / 60000;
+            clientResponse.setExpireTimeInMins(mins);
         return new ResponseEntity<>(clientResponse, HttpStatus.OK);
         }
         return new ResponseEntity<>("Invalid credentials!", HttpStatus.UNAUTHORIZED);

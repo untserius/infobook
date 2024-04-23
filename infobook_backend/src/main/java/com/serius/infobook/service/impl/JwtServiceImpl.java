@@ -2,6 +2,7 @@ package com.serius.infobook.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.serius.infobook.entity.User;
 import com.serius.infobook.service.JwtService;
 import jakarta.annotation.PostConstruct;
@@ -37,5 +38,12 @@ public class JwtServiceImpl implements JwtService {
                 .withIssuer(issuer)
                 .sign(algorithm);
         return token;
+    }
+
+    @Override
+    public String fetchUsername(String token) {
+        DecodedJWT decodedJWT = JWT.require(algorithm).withIssuer(issuer).build().verify(token);
+        String decodedUsername = decodedJWT.getClaim(USER_NAME).asString();
+        return decodedUsername;
     }
 }

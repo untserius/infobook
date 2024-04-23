@@ -48,4 +48,11 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        var byUsername = userRepository.findByUsername(username);
+        return byUsername;
+    }
+
 }

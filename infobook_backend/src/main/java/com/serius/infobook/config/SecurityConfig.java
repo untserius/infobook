@@ -12,15 +12,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
 @Configuration
 public class SecurityConfig {
+
+    private JwtFilterRequest jwtFilterRequest;
+
+    public SecurityConfig(JwtFilterRequest jwtFilterRequest) {
+        this.jwtFilterRequest = jwtFilterRequest;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf((csrf) -> csrf.ignoringRequestMatchers("/api/v1/**" )) // ignoring csrf protect for all requests coming from "/api/v1/students"
-
+                .addFilterBefore(jwtFilterRequest, AuthorizationFilter.class)
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/api/v1/user/signup", "/api/v1/user/signin").permitAll()
