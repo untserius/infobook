@@ -54,7 +54,7 @@ public class ObjectMapper {
         user.setId(userDto.getId());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
-        user.setUserName(userDto.getUserName());
+        user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
 
         String hashedPassword = BCrypt.hashpw(userDto.getPassword(), BCrypt.gensalt(10));
@@ -69,7 +69,7 @@ public class ObjectMapper {
         userDto.setId(user.getId());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
-        userDto.setUserName(user.getUserName());
+        userDto.setUsername(user.getUsername());
         userDto.setEmail(user.getEmail());
         userDto.setPassword(user.getPassword());
         userDto.setUserRole(user.getUserRole());

@@ -23,7 +23,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(
                         authorize -> authorize
-                                .requestMatchers("/api/v1/user/signup").permitAll()
+                                .requestMatchers("/api/v1/user/signup", "/api/v1/user/signin").permitAll()
                                 .requestMatchers("/api/v1/students/addStudent", "/api/v1/students/getStudent", "/api/v1/students/getAll", "/api/v1/students/fetchallbypaginationandsorting", "/api/v1/students/fetchallbypagination").hasRole("USER")
                                 .requestMatchers("/api/v1/students/updateStudent", "/api/v1/students/deleteStudent").hasRole("ADMIN")
                                 .anyRequest().authenticated()
