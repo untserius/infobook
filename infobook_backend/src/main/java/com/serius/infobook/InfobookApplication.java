@@ -10,7 +10,7 @@ public class InfobookApplication {
 		SpringApplication.run(InfobookApplication.class, args);
 	}
 
-	// Changes from remote
+	// Changes from remote 2
 
 
 }
